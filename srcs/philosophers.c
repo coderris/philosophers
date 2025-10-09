@@ -19,7 +19,8 @@ int	main(int argc, char** argv)
 
 	parser(argc, argv);
 	imputs = ft_handle_input(argc, argv);
-	ft_struct_init(&general, imputs);
+	ft_structs_init(&general, imputs);
+	general.start_time = ft_get_time();
 	free(imputs);
 	return (0);
 }
