@@ -52,5 +52,8 @@ long long		*ft_handle_input(int rules, char **argv);
 void			ft_structs_init(t_general_info *general, long long *imputs);
 void			ft_philos_init(t_philo *philo, t_general_info *general, int idx);
 void			ft_forks_init(t_general_info *general, long long *imputs);
+void			ft_philo_threads_init(t_general_info *general);
+void			*philosopher_routine(void *arg);
 long long		ft_get_time(void);
+long long		ft_actual_time(long long start_time);
 #endif

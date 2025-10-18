@@ -21,6 +21,7 @@ int	main(int argc, char** argv)
 	imputs = ft_handle_input(argc, argv);
 	ft_structs_init(&general, imputs);
 	general.start_time = ft_get_time();
+	ft_philo_threads_init(&general);
 	free(imputs);
 	return (0);
 }

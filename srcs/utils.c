@@ -68,3 +68,47 @@ void	ft_philos_init(t_philo *philo, t_general_info *general, int idx)
 		philo->general = general;
 }
 
+void	ft_philo_threads_init(t_general_info *general)
+{
+	int	i;
+
+	i = 0;
+	while (i < general->philo_num)
+	{
+		pthread_create(&general->philos[i].thread, NULL, philosopher_routine, &general->philos[i]);
+		i++;
+	}
+}
+void	*philosopher_routine(void *arg)
+{
+	t_philo	*philo = (t_philo *)arg;
+
+	while(!philo->general->stop)
+	{
+		if (!ft_take_forks(philo))
+		{
+			ft_eat(philo);
+			ft_drop_forks(philo);
+			ft_sleep_and_think(philo);
+		}
+		else
+			usleep(100);
+	}
+
+}
+int	ft_take_forks(t_philo *philo)
+{
+	int	first;
+	int	second;
+
+	first = philo->left_fork;
+	second = philo->right_fork;
+	if (philo->left_fork > philo->right_fork)
+	{
+		first = philo->right_fork;
+		second = philo->left_fork;
+	}
+	pthread_mutex_lock(&philo->general->forks[first]);
+	pthread_mutex_lock(&philo->general->forks[second]);
+	return (0);
+}
