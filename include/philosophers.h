@@ -31,9 +31,9 @@ typedef struct s_general_info
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	state_lock;
-	t_philo			*philos;
 	int				stop;
 	int				satisfied;
+	t_philo			*philos;
 }	t_general_info;
 
 typedef struct s_philo
@@ -47,13 +47,26 @@ typedef struct s_philo
 	t_general_info	*general;
 }	t_philo;
 
+//parser.c
+
 int				parser(int argc, char **argv);
 long long		*ft_handle_input(int rules, char **argv);
-void			ft_structs_init(t_general_info *general, long long *imputs);
-void			ft_philos_init(t_philo *philo, t_general_info *general, int idx);
-void			ft_forks_init(t_general_info *general, long long *imputs);
-void			ft_philo_threads_init(t_general_info *general);
-void			*philosopher_routine(void *arg);
+
+//time.c
+
 long long		ft_get_time(void);
-long long		ft_actual_time(long long start_time);
+long long		ft_current_time(long long start_time);
+
+//utils.c
+
+void			ft_structs_init(t_general_info *general, long long *imputs);
+void			ft_forks_init(t_general_info *general, long long *imputs);
+void			ft_philos_init(t_philo *philo, t_general_info *general, int idx);
+void			ft_philo_threads_init(t_general_info *general);
+void			ft_print_status(t_philo *philo, char *str);
+
+//rutine.c
+
+void			*philosopher_routine(void *arg);
+
 #endif

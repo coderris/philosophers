@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lanton-m <lanton-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/03 23:40:39 by lanton-m          #+#    #+#             */
-/*   Updated: 2025/10/03 23:40:39 by lanton-m         ###   ########.fr       */
+/*   Created: 2025/11/29 00:21:16 by lanton-m          #+#    #+#             */
+/*   Updated: 2025/11/29 00:21:16 by lanton-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-int	main(int argc, char** argv)
+long long	ft_get_time(void)
 {
-	t_general_info		general;
-	long long			*imputs;
+	struct timeval	tv;
 
-	parser(argc, argv);
-	imputs = ft_handle_input(argc, argv);
-	ft_structs_init(&general, imputs);
-	general.start_time = ft_get_time();
-	ft_philo_threads_init(&general);
-	return (0);
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+long long	ft_current_time(long long start_time)
+{
+	return (ft_get_time() - start_time);
 }

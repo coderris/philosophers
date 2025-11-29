@@ -23,6 +23,8 @@ OBJS_DIR = objs/
 SRCS = 	$(SRCS_DIR)philosophers.c \
 		$(SRCS_DIR)utils.c \
 		$(SRCS_DIR)parser.c \
+		$(SRCS_DIR)time.c \
+		$(SRCS_DIR)rutine.c \
 
 OBJS = $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 

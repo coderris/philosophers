@@ -39,6 +39,7 @@ void	ft_structs_init(t_general_info *general, long long *imputs)
 	general->stop = 0;
 	general->satisfied = 0;
 }
+
 void	ft_forks_init(t_general_info *general, long long *imputs)
 {
 	int	i;
@@ -79,36 +80,16 @@ void	ft_philo_threads_init(t_general_info *general)
 		i++;
 	}
 }
-void	*philosopher_routine(void *arg)
+
+void	ft_print_status(t_philo *philo, char *str)
 {
-	t_philo	*philo = (t_philo *)arg;
+	long long timestamp;
 
-	while(!philo->general->stop)
+	pthread_mutex_lock(&philo->general->print_lock);
+	if (!philo->general->stop)
 	{
-		if (!ft_take_forks(philo))
-		{
-			ft_eat(philo);
-			ft_drop_forks(philo);
-			ft_sleep_and_think(philo);
-		}
-		else
-			usleep(100);
+		timestamp = ft_current_time(philo->general->start_time);
+		printf("%lld %d %s\n", timestamp, philo->id, str);
 	}
-
-}
-int	ft_take_forks(t_philo *philo)
-{
-	int	first;
-	int	second;
-
-	first = philo->left_fork;
-	second = philo->right_fork;
-	if (philo->left_fork > philo->right_fork)
-	{
-		first = philo->right_fork;
-		second = philo->left_fork;
-	}
-	pthread_mutex_lock(&philo->general->forks[first]);
-	pthread_mutex_lock(&philo->general->forks[second]);
-	return (0);
+	pthread_mutex_unlock(&philo->general->print_lock);
 }

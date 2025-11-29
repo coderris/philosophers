@@ -12,9 +12,20 @@
 
 #include "../include/philosophers.h"
 
-static long long	ft_atoi(char *str);
+static long long	ft_atoi(char *str)
+{
+	long long	result;
 
-static int	ft_is_digit(char c)
+	result = 0;
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result);
+}
+
+static int	ft_isdigit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -28,7 +39,7 @@ static int	ft_check_nums(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_is_digit(str[i]))
+		if (!ft_isdigit(str[i]))
 			return (1);
 		i++;
 	}
@@ -76,17 +87,4 @@ long long	*ft_handle_input(int rules, char **argv)
 		i++;
 	}
 	return (nums);
-}
-
-static long long	ft_atoi(char *str)
-{
-	long long	result;
-
-	result = 0;
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + (*str - '0');
-		str++;
-	}
-	return (result);
 }
