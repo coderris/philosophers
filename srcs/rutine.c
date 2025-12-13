@@ -12,20 +12,6 @@
 
 #include "../include/philosophers.h"
 
-void	*philosopher_routine(void *arg)
-{
-	t_philo	*philo = (t_philo *)arg;
-
-	while(!philo->general->stop)
-	{
-		ft_take_forks(philo);
-		ft_eat(philo);
-		ft_drop_forks(philo);
-		ft_sleep_and_think(philo);
-	}
-	return (NULL);
-}
-
 static void	ft_take_forks(t_philo *philo)
 {
 	int	first;
@@ -46,13 +32,20 @@ static void	ft_take_forks(t_philo *philo)
 
 static void	ft_eat(t_philo *philo)
 {
+	long long start;
+
 	pthread_mutex_lock(&philo->general->state_lock);
-	start_eating = ft_get_time();
 	philo->meals_eaten++;
 	philo->last_meal = ft_get_time();
 	pthread_mutex_unlock(&philo->general->state_lock);
-	ft_print_status(philo, "is eating")
-	usleep(philo->general->tte * 1000);
+	ft_print_status(philo, "is eating");
+	start = ft_get_time();
+	while (ft_get_time() - start < philo->general->tte)
+	{
+		if (stop_check(philo))
+			return;
+		usleep(1000);
+	}
 }
 
 static void ft_drop_forks(t_philo *philo)
@@ -66,4 +59,45 @@ static void	ft_sleep_and_think(t_philo *philo)
 	ft_print_status(philo, "is sleeping");
 	usleep(philo->general->tts * 1000);
 	ft_print_status(philo, "is thinking");
+}
+
+void	*philosopher_routine(void *arg)
+{
+	t_philo	*philo = (t_philo *)arg;
+
+	if (philo->general->philo_num == 1)
+	{
+		ft_print_status(philo, "has taken a fork");
+		usleep(philo->general->ttd * 1000);
+		return (NULL);
+	}
+	if (philo->id % 2 == 0)
+		usleep(1000);
+	while(1)
+	{
+		if (stop_check(philo))
+			break;
+		ft_take_forks(philo);
+		if (stop_check(philo))
+		{
+			ft_drop_forks(philo);
+			break;
+		}
+		ft_eat(philo);
+		ft_drop_forks(philo);
+		if (stop_check(philo))
+			break;
+		ft_sleep_and_think(philo);
+	}
+	return (NULL);
+}
+
+int stop_check(t_philo *philo)
+{
+	int	stop_value;
+
+	pthread_mutex_lock(&philo->general->state_lock);
+	stop_value = philo->general->stop;
+	pthread_mutex_unlock(&philo->general->state_lock);
+	return (stop_value);
 }

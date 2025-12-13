@@ -52,7 +52,7 @@ int	parser(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+		printf("Invalid number of arguments.\nUsage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		exit(1);
 	}
 	i = 1;
@@ -60,7 +60,7 @@ int	parser(int argc, char **argv)
 	{
 		if (ft_check_nums(argv[i]))
 		{
-			printf("Check your numbers pls --> %s\n", argv[i]);
+			printf("Invalid argument: %s\nCheck your numbers please\n", argv[i]);
 			exit(1);
 		}
 		i++;
@@ -81,7 +81,7 @@ long long	*ft_handle_input(int rules, char **argv)
 		if (nums[i - 1] <= 0)
 		{
 			free(nums);
-			printf("Check your numbers pls --> %s\n", argv[i]);
+			printf("Invalid argument: %s\nCheck your numbers pls\n", argv[i]);
 			exit(1);
 		}
 		i++;

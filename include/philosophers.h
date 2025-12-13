@@ -20,6 +20,8 @@
 # include <pthread.h>
 # include <stdbool.h>
 
+typedef struct s_philo t_philo;
+
 typedef struct s_general_info
 {
 	int				philo_num;
@@ -68,5 +70,12 @@ void			ft_print_status(t_philo *philo, char *str);
 //rutine.c
 
 void			*philosopher_routine(void *arg);
+int 			stop_check(t_philo *philo);
+//monitor.c
 
+void			*monitor_routine(void *arg);
+
+//cleaners.c
+
+void			clean_all(t_general_info *general, long long *imputs);
 #endif
