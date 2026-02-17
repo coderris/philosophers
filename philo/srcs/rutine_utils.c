@@ -6,7 +6,7 @@
 /*   By: lanton-m <lanton-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 19:27:57 by lanton-m          #+#    #+#             */
-/*   Updated: 2026/02/14 19:39:16 by lanton-m         ###   ########.fr       */
+/*   Updated: 2026/02/18 00:54:17 by lanton-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,15 @@ char	*one_philo_case(t_philo *philo)
 	ft_print_status(philo, "has taken a fork");
 	usleep(philo->general->ttd * 1000);
 	return (NULL);
+}
+
+int	check_sleep(t_philo *philo, long long check_time, long long start)
+{
+	while (ft_get_time() - start < check_time)
+	{
+		if (stop_check(philo))
+			return (1);
+		usleep(500);
+	}
+	return (0);
 }

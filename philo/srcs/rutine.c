@@ -59,12 +59,16 @@ static void	ft_sleep_and_think(t_philo *philo)
 	long long	think_time;
 
 	ft_print_status(philo, "is sleeping");
-	usleep(philo->general->tts * 1000);
+	if (check_sleep(philo, philo->general->tts, ft_get_time()))
+		return ;
 	ft_print_status(philo, "is thinking");
 	think_time = (philo->general->ttd - philo->general->tte
 			- philo->general->tts) / 2;
 	if (think_time > 0)
-		usleep(think_time * 1000);
+	{
+		if (check_sleep(philo, think_time, ft_get_time()))
+			return ;
+	}
 	else if (philo->general->philo_num % 2 == 1)
 		usleep(1000);
 }

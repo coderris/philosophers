@@ -84,16 +84,14 @@ void	ft_philo_threads_init(t_general_info *general)
 void	ft_print_status(t_philo *philo, char *str)
 {
 	long long	timestamp;
-	int			should_print;
 
 	pthread_mutex_lock(&philo->general->state_lock);
-	should_print = !philo->general->stop;
-	pthread_mutex_unlock(&philo->general->state_lock);
-	if (should_print)
+	if (!philo->general->stop)
 	{
 		pthread_mutex_lock(&philo->general->print_lock);
 		timestamp = ft_current_time(philo->general->start_time);
 		printf("%lld %d %s\n", timestamp, philo->id, str);
 		pthread_mutex_unlock(&philo->general->print_lock);
 	}
+	pthread_mutex_unlock(&philo->general->state_lock);
 }

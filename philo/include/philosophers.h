@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: lanton-m <lanton-m@student.42malaga.com    +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2025/10/03 23:39:12 by lanton-m          #+#    #+#             */
-/*   Updated: 2025/10/03 23:39:12 by lanton-m         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lanton-m <lanton-m@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/18 00:22:54 by lanton-m          #+#    #+#             */
+/*   Updated: 2026/02/18 00:22:54 by lanton-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +19,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_philo	t_philo;
 
@@ -55,7 +53,7 @@ typedef struct s_philo
 // parser.c
 
 int			parser(int argc, char **argv);
-long long	*ft_handle_input(int rules, char **argv);
+long long	*ft_handle_input(char **argv);
 
 // time.c
 
@@ -79,6 +77,7 @@ int			stop_check(t_philo *philo);
 
 void		sleep_start(t_philo *philo);
 char		*one_philo_case(t_philo *philo);
+int			check_sleep(t_philo *philo, long long check_time, long long start);
 
 // monitor.c
 

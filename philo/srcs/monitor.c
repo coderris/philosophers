@@ -61,10 +61,7 @@ static char	*monitor_loop(t_general_info *general)
 			pthread_mutex_lock(&general->state_lock);
 			no_eat_time = ft_get_time() - general->philos[i].last_meal;
 			if (no_eat_time > general->ttd)
-			{
-				print_dead_philo(general, i);
-				return (NULL);
-			}
+				return (print_dead_philo(general, i), NULL);
 			pthread_mutex_unlock(&general->state_lock);
 			i++;
 		}

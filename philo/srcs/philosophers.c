@@ -28,9 +28,8 @@ int	main(int argc, char **argv)
 	pthread_t			monitor_thread;
 	int					i;
 
-	i = 0;
 	parser(argc, argv);
-	imputs = ft_handle_input(argc, argv);
+	imputs = ft_handle_input(argv);
 	ft_structs_init(&general, imputs);
 	pthread_create(&monitor_thread, NULL, monitor_routine, &general);
 	ft_philo_threads_init(&general);
@@ -38,6 +37,7 @@ int	main(int argc, char **argv)
 	general.start_time = ft_get_time();
 	set_last_meal(&general);
 	pthread_mutex_unlock(&general.state_lock);
+	i = 0;
 	while (i < general.philo_num)
 		pthread_join(general.philos[i++].thread, NULL);
 	pthread_join(monitor_thread, NULL);

@@ -71,17 +71,18 @@ int	parser(int argc, char **argv)
 	return (0);
 }
 
-long long	*ft_handle_input(int rules, char **argv)
+long long	*ft_handle_input(char **argv)
 {
 	int			i;
 	long long	*nums;
 
 	i = 1;
-	nums = malloc(sizeof(long long) * rules);
+	nums = malloc(sizeof(long long) * 5);
+	nums[4] = 0;
 	while (argv[i])
 	{
 		nums[i - 1] = ft_atoi(argv[i]);
-		if (nums[i - 1] <= 0)
+		if (nums[i - 1] == 0 || nums[i - 1] > INT_MAX)
 		{
 			free(nums);
 			printf("Invalid argument: %s\nCheck your numbers pls\n", argv[i]);
